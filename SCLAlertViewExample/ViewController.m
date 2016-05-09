@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "SCLAlertView.h"
+#import "GlobalSCL.h"
 
 @interface ViewController ()
 
@@ -35,7 +36,26 @@ NSString *kAttributeTitle = @"Attributed string operation successfully completed
     for (UIView *view in self.scrollView.subviews) {
         contentRect = CGRectUnion(contentRect, view.frame);
     }
+    
+    contentRect.size.width = 0;
     self.scrollView.contentSize = contentRect.size;
+}
+
+-(void)showMyCustom:(id)sender{
+    
+    [GlobalSCL sclWaitingShow:@"Processing"
+                         body:@"This is a body😬"];
+    
+    [self performSelector:@selector(customHideOnBackgroundThread)
+               withObject:nil
+               afterDelay:5];
+}
+
+-(void)customHideOnBackgroundThread{
+    dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        [GlobalSCL sclWaitingHide];
+    });
 }
 
 - (void)didReceiveMemoryWarning

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C7B83281CE0AF470033ECE1 /* SCLConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B83271CE0AF470033ECE1 /* SCLConfig.m */; };
+		3CA2B2861CE0AC25001E3746 /* GlobalSCL.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA2B2851CE0AC25001E3746 /* GlobalSCL.m */; };
 		572BB1471B8383B3002DEE38 /* SCLTimerDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 572BB1461B8383B3002DEE38 /* SCLTimerDisplay.m */; };
 		CF6FB1241C5926FC009715F3 /* SCLSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF6FB1231C5926FC009715F3 /* SCLSwitchView.m */; };
 		DD06C22D1C64EAE500E6F6B0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD06C22C1C64EAE500E6F6B0 /* UIKit.framework */; };
@@ -39,6 +41,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3C7B83261CE0AF470033ECE1 /* SCLConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLConfig.h; sourceTree = "<group>"; };
+		3C7B83271CE0AF470033ECE1 /* SCLConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLConfig.m; sourceTree = "<group>"; };
+		3CA2B2841CE0AC25001E3746 /* GlobalSCL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalSCL.h; sourceTree = "<group>"; };
+		3CA2B2851CE0AC25001E3746 /* GlobalSCL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalSCL.m; sourceTree = "<group>"; };
 		572BB1451B8383B3002DEE38 /* SCLTimerDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLTimerDisplay.h; sourceTree = "<group>"; };
 		572BB1461B8383B3002DEE38 /* SCLTimerDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLTimerDisplay.m; sourceTree = "<group>"; };
 		CF6FB1221C5926FC009715F3 /* SCLSwitchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLSwitchView.h; sourceTree = "<group>"; };
@@ -100,6 +106,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3C7B83251CE0AF230033ECE1 /* Custom stuff */ = {
+			isa = PBXGroup;
+			children = (
+				3CA2B2841CE0AC25001E3746 /* GlobalSCL.h */,
+				3CA2B2851CE0AC25001E3746 /* GlobalSCL.m */,
+				3C7B83261CE0AF470033ECE1 /* SCLConfig.h */,
+				3C7B83271CE0AF470033ECE1 /* SCLConfig.m */,
+			);
+			name = "Custom stuff";
+			sourceTree = "<group>";
+		};
 		DD06C2381C64EC5D00E6F6B0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -188,6 +205,7 @@
 		DDB15FD519D5B96500173158 /* SCLAlertView */ = {
 			isa = PBXGroup;
 			children = (
+				3C7B83251CE0AF230033ECE1 /* Custom stuff */,
 				DD2E172819FA84B800CBAEC3 /* UIImage+ImageEffects.h */,
 				DD2E172919FA84B800CBAEC3 /* UIImage+ImageEffects.m */,
 				DDB15FD819D5B98800173158 /* SCLAlertView.h */,
@@ -314,10 +332,12 @@
 				DDB15FD419D5B8DB00173158 /* main.m in Sources */,
 				CF6FB1241C5926FC009715F3 /* SCLSwitchView.m in Sources */,
 				DDB15FE119D5D85B00173158 /* SCLAlertViewStyleKit.m in Sources */,
+				3C7B83281CE0AF470033ECE1 /* SCLConfig.m in Sources */,
 				DD24453C1BAC383600892117 /* SCLTextView.m in Sources */,
 				572BB1471B8383B3002DEE38 /* SCLTimerDisplay.m in Sources */,
 				DDB15FD719D5B96500173158 /* SCLAlertView.m in Sources */,
 				DDB15FDB19D5BAA000173158 /* SCLButton.m in Sources */,
+				3CA2B2861CE0AC25001E3746 /* GlobalSCL.m in Sources */,
 				DDB15FCA19D5B88A00173158 /* AppDelegate.m in Sources */,
 				DDB15FDE19D5BCF400173158 /* SCLAlertViewResponder.m in Sources */,
 			);
@@ -440,7 +460,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/SCLAlertViewExample/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "br.com.anykey.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = SCLAlertView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -453,7 +473,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/SCLAlertViewExample/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "br.com.anykey.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = SCLAlertView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

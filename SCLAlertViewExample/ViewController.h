@@ -10,6 +10,8 @@
 
 @interface ViewController : UIViewController
 
+- (IBAction)showMyCustom:(id)sender;
+
 - (IBAction)showSuccess:(id)sender;
 - (IBAction)showSuccessWithHorizontalButtons:(id)sender;
 - (IBAction)showError:(id)sender;

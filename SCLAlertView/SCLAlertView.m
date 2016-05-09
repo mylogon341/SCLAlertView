@@ -401,6 +401,30 @@ SCLTimerDisplay *buttonTimer;
     _contentView.layer.cornerRadius = self.cornerRadius ? self.cornerRadius : 5.0f;
 }
 
+#pragma mark - add custom text view
+
+
+-(void)addTextView{
+    [self addObservers];
+    
+    // Add text field
+    
+    _customTextView = [[UITextView alloc]initWithFrame:CGRectMake(0, 0, 200, 100)];
+    [_customTextView setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
+    
+    _customTextView.font = [UIFont fontWithName:_bodyTextFontFamily size:_bodyFontSize];
+    [self addCustomTextView:_customTextView];
+}
+
+-(void)addCustomTextView:(UITextView*)tv{
+  
+    // Update view height
+    self.windowHeight += _customTextView.bounds.size.height + 10.0f;
+    
+    [_contentView addSubview:_customTextView];
+    [_inputs addObject:_customTextView];
+}
+
 #pragma mark - UIViewController
 
 - (BOOL)prefersStatusBarHidden
@@ -897,7 +921,19 @@ SCLTimerDisplay *buttonTimer;
     // Title
     if([title stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].length > 0)
     {
-        self.labelTitle.text = title;
+        
+        // No custom text
+        if (_attributedFormatBlock == nil)
+        {
+            self.labelTitle.text = title;
+        }
+        else
+        {
+            self.labelTitle.font = [UIFont fontWithName:_bodyTextFontFamily size:100];
+            self.labelTitle.attributedText = self.attributedFormatBlock(title);
+//            [self.labelTitle setAdjustsFontSizeToFitWidth:YES];
+        }
+
     }
     else
     {

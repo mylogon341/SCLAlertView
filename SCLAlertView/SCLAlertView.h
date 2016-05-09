@@ -81,6 +81,10 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
     Transparent
 };
 
+/** If addTextView: is called, this is the textView object in question*/
+@property (nonatomic, strong) UITextView *customTextView;
+
+
 /** Content view corner radius
  *
  * A float value that replaces the standard content viuew corner radius.
@@ -239,6 +243,12 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
  * Init with new window with custom width
  */
 - (instancetype)initWithNewWindowWidth:(CGFloat)windowWidth;
+
+/**Adds a custom UITextView to alert view*/
+- (void)addTextView;
+
+/**Able to pass in your favourite textview*/
+-(void)addCustomTextView:(UITextView*)tv;
 
 /** Warns that alerts is gone
  *

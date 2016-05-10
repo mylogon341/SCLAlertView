@@ -116,12 +116,15 @@
 
 
 +(void)showMessage:(NSString *)message forSeconds:(NSUInteger)seconds{
-    SCLAlertView * messageAlert = [self sclGlobal];
-    
-    [messageAlert showEdit:nil
-                  subTitle:message
-          closeButtonTitle:nil
-                  duration:seconds];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        SCLAlertView * messageAlert = [self sclGlobal];
+        
+        [messageAlert showEdit:nil
+                      subTitle:message
+              closeButtonTitle:nil
+                      duration:seconds];
+    });
 }
 
 

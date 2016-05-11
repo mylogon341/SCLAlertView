@@ -12,6 +12,7 @@
 #import "UIImage+ImageEffects.h"
 #import "SCLTimerDisplay.h"
 #import "SCLMacros.h"
+#import "GlobalSCL.h"
 
 #if defined(__has_feature) && __has_feature(modules)
 @import AVFoundation;
@@ -930,7 +931,8 @@ SCLTimerDisplay *buttonTimer;
         else
         {
             self.labelTitle.font = [UIFont fontWithName:_bodyTextFontFamily size:100];
-            self.labelTitle.attributedText = self.attributedFormatBlock(title);
+            
+            self.labelTitle.attributedText = self.attributedFormatBlock([GlobalSCL areAllTitlesUppercase] ? title.uppercaseString : title);
 //            [self.labelTitle setAdjustsFontSizeToFitWidth:YES];
         }
 

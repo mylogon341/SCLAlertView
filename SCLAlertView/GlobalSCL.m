@@ -89,20 +89,6 @@ static GlobalSCL * global;
     NSLog(@"hiding");
 }
 
-+(UIFont*)getGlobalFont{
-    UIFont * font = [self globalSelf].configFile.globalFont;
-    return font ? font : [UIFont fontWithName:@"Avenir" size:18];
-}
-
-+(UIColor*)getGlobalColour{
-    UIColor * colour = [self globalSelf].configFile.corperateColour;
-    return colour ? colour : [UIColor lightGrayColor];
-}
-
-+(UIColor*)getBackgroundColour{
-    UIColor * colour = [self globalSelf].configFile.background;
-    return colour ? colour : [UIColor lightGrayColor];
-}
 
 -(NSAttributedString*)sclAttString:(NSString *)value{
     NSMutableDictionary *attrsDictionary = [NSMutableDictionary dictionary];
@@ -155,5 +141,25 @@ static GlobalSCL * global;
     return isDark ? [UIColor lightTextColor] : [UIColor darkTextColor];
 }
 
+#pragma mark - Getter methods
 
+
++(BOOL)areAllTitlesUppercase{
+    return [self globalSelf].configFile.titlesUpperCase;
+}
+
++(UIFont*)getGlobalFont{
+    UIFont * font = [self globalSelf].configFile.globalFont;
+    return font ? font : [UIFont fontWithName:@"Avenir" size:18];
+}
+
++(UIColor*)getGlobalColour{
+    UIColor * colour = [self globalSelf].configFile.corperateColour;
+    return colour ? colour : [UIColor lightGrayColor];
+}
+
++(UIColor*)getBackgroundColour{
+    UIColor * colour = [self globalSelf].configFile.background;
+    return colour ? colour : [UIColor lightGrayColor];
+}
 @end

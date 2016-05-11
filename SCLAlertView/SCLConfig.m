@@ -11,17 +11,6 @@
 
 @implementation SCLConfig
 
-+(_Nonnull instancetype)configWithColour:(nullable UIColor*)colour background:(nonnull UIColor*)background andFont:(nullable UIFont*)font{
-    SCLConfig * config = [[self alloc]init];
-    config.corperateColour = colour;
-    config.globalFont = font;
-    
-    return config;
-}
-
-+(instancetype)configWithHEX:(NSString*)colour backgroundHEX:(NSString*)background andFont:(UIFont *)font{
-    return [SCLConfig configWithColour:[self colorFromHexString:colour] background:[self colorFromHexString:background] andFont:font];
-}
 
 + (UIColor *)colorFromHexString:(NSString *)hexString {
     unsigned rgbValue = 0;
@@ -33,6 +22,29 @@
     
     [scanner scanHexInt:&rgbValue];
     return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
+}
+
++(instancetype)configurationWithBlock:(void (^)(id<SCLMutableConfig>))configurationBlock{
+    return [[self alloc]initWithBlock:configurationBlock];
+}
+
+- (instancetype)initWithBlock:(void (^)(SCLConfig *))configurationBlock {
+    self = [self initEmpty];
+    if (!self) return nil;
+    
+    configurationBlock(self);
+    
+    return self;
+}
+
+- (instancetype)initEmpty {
+    self = [super init];
+    if (!self) return nil;
+    
+//    _networkRetryAttempts = PFCommandRunningDefaultMaxAttemptsCount;
+//    _server = [_ParseDefaultServerURLString copy];
+    
+    return self;
 }
 
 @end

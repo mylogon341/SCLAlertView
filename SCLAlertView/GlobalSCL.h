@@ -39,6 +39,10 @@
 /**Getter for colour set in config file. If not set in an SCLConfig for alertConfig:, then will fall back on lightGray*/
 +(UIColor*)getGlobalColour;
 
++(UIColor*)getBackgroundColour;
+
++(BOOL)areAllTitlesUppercase;
+
 @end
 
 

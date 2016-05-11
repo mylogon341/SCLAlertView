@@ -27,7 +27,7 @@
 +(void)showMessage:(NSString *)message forSeconds:(NSUInteger)seconds;
 
 /**Shows a message for set number of seconds with title.*/
-+(void)showMessage:(NSString *)message withTitle:(NSString*)title forSeconds:(NSUInteger)seconds;
++(void)showMessage:(NSString *)title withBody:(NSString*)body forSeconds:(NSUInteger)seconds;
 
 /**Update alert string here. Useful for progress text etc*/
 +(void)updateAlertText:(NSString*)body;

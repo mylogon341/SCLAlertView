@@ -43,7 +43,7 @@ NSString *kAttributeTitle = @"Attributed string operation successfully completed
 
 -(void)showMyCustom:(id)sender{
     
-    
+    [GlobalSCL showMessage:@"Alert!" withBody:@"Body here. Body there" forSeconds:14];
     
 }
 

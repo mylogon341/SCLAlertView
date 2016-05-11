@@ -111,20 +111,20 @@ static GlobalSCL * global;
     });
 }
 
-+(void)showMessage:(NSString *)message withTitle:(NSString*)title forSeconds:(NSUInteger)seconds{
++(void)showMessage:(NSString *)title withBody:(NSString *)body forSeconds:(NSUInteger)seconds{
     dispatch_async(dispatch_get_main_queue(), ^{
         
         
         [[self sclGlobal] showEdit:title
-                          subTitle:message
+                          subTitle:body
                   closeButtonTitle:nil
                           duration:seconds];
     });
 }
 
 +(void)showMessage:(NSString *)message forSeconds:(NSUInteger)seconds{
-    [self showMessage:message
-            withTitle:nil
+    [self showMessage:nil
+             withBody:message
            forSeconds:seconds];
 }
 

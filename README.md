@@ -42,24 +42,24 @@ or create a .pch file and import it into there to make it accessible from everyw
 ###Add TextView
 Getting singleton Alert
 ```Objective-C
-    SCLAlertView * alert = [GlobalSCL sclGlobal];
+SCLAlertView * alert = [GlobalSCL sclGlobal];
 ```
 
 ###Add TextView
 A standard textview can easily be inserted and have text retrieved from
 ```Objective-C
- SCLAlertView * alert = [GlobalSCL sclGlobal];
-    [alert addTextView];
+SCLAlertView * alert = [GlobalSCL sclGlobal];
+[alert addTextView];
     
-    [alert addButton:@"Button title"
-         actionBlock:^{
-             NSLog(@"%@",alert.customTextView.text);
-         }];
+[alert addButton:@"Button title"
+     actionBlock:^{
+         NSLog(@"%@",alert.customTextView.text);
+}];
 ```
 
 ###Making calls to helper class
 ```Objective-C
-[GlobalSCL showMessage:@"This is the body" withTitle:@"Alert!" forSeconds:4.5];
+[GlobalSCL showMessage:@"Alert!" withBody:@"Body here. Body there" forSeconds:14];
 [GlobalSCL showMessage:@"Success!!!" forSeconds:2.5];
 [GlobalSCL sclWaitingShow:@"Processing" body:@"This is a body"];
 ```

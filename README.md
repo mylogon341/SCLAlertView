@@ -28,7 +28,7 @@ Ideally you want to run this when launching the app
         [config setCorperateColour:[UIColor greenColor]];
         [config setBackground:[UIColor blueColor]];
         [config setGlobalFont:[UIFont fontWithName:@"Avenir-light" size:33]];
-        
+        [config setTitlesUpperCase:YES];
     }]];
 
 ```

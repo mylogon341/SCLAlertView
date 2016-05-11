@@ -22,7 +22,7 @@
 /**Sets the global font of all alerts. Defaults to Avenir 18*/
 @property (nullable, nonatomic) UIFont * globalFont;
 
-
+/**Forces all titles to be uppercase globally*/
 @property (nonatomic) BOOL titlesUpperCase;
 
 @end

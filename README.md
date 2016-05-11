@@ -17,8 +17,9 @@ Animated Alert View written in Swift but ported to Objective-C, which can be use
 
 ###Installation
 To install add the following line to your Podfile:
-    pod 'SCLAlertView-Objective-C', :git => 'https://github.com/mylogon341/SCLAlertView.git'
-
+```
+pod 'SCLAlertView-Objective-C', :git => 'https://github.com/mylogon341/SCLAlertView.git'
+```
 
 ###Global config setup
 Ideally you want to run this when launching the app

@@ -8,7 +8,10 @@
 
 #import "GlobalSCL.h"
 
+static GlobalSCL * global;
+
 @interface GlobalSCL()
+
 
 @property (nonatomic, strong) SCLAlertView *aAlert;
 @property (nonatomic, strong) SCLConfig *configFile;;
@@ -23,7 +26,14 @@
 
 +(SCLAlertView *)sclGlobal{
     
-    [self sclWaitingHide];
+    //    [self sclWaitingHide];
+    
+    
+    
+    if ([[self globalSelf].aAlert isVisible]) {
+        [[self globalSelf].aAlert hideView];
+        return [self sclGlobal];
+    }
     
     SCLAlertView * alert = [[self globalSelf] alert];
     [alert removeTopCircle];
@@ -31,7 +41,6 @@
 }
 
 +(GlobalSCL*)globalSelf{
-    static GlobalSCL * global;
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -45,7 +54,7 @@
     if (!_aAlert) {
         
         __weak typeof(self) weakSelf = self;
-
+        
         _aAlert = [[SCLAlertView alloc]initWithNewWindow];
         [_aAlert setCustomViewColor: self.configFile.corperateColour ? self.configFile.corperateColour : [UIColor lightGrayColor]];
         _aAlert.attributedFormatBlock = ^NSAttributedString* (NSString *value)
@@ -53,9 +62,13 @@
             return [weakSelf sclAttString:value];
         };
         
-        [_aAlert setBackgroundType:Transparent];
+        //        [_aAlert setBackgroundType:];
         [_aAlert setShowAnimationType:FadeIn];
         [_aAlert setHideAnimationType:FadeOut];
+        
+        [_aAlert alertIsDismissed:^{
+            _aAlert = nil;
+        }];
         
     }
     return _aAlert;
@@ -72,10 +85,8 @@
 }
 
 +(void)sclWaitingHide{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[self globalSelf].aAlert hideView];
-        [self globalSelf].aAlert = nil;
-    });
+    [[[self globalSelf] alert] hideView];
+    NSLog(@"hiding");
 }
 
 +(UIFont*)getGlobalFont{
@@ -114,23 +125,27 @@
     });
 }
 
-
-+(void)showMessage:(NSString *)message forSeconds:(NSUInteger)seconds{
++(void)showMessage:(NSString *)message withTitle:(NSString*)title forSeconds:(NSUInteger)seconds{
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        SCLAlertView * messageAlert = [self sclGlobal];
         
-        [messageAlert showEdit:nil
-                      subTitle:message
-              closeButtonTitle:nil
-                      duration:seconds];
+        [[self sclGlobal] showEdit:title
+                          subTitle:message
+                  closeButtonTitle:nil
+                          duration:seconds];
     });
+}
+
++(void)showMessage:(NSString *)message forSeconds:(NSUInteger)seconds{
+    [self showMessage:message
+            withTitle:nil
+           forSeconds:seconds];
 }
 
 
 //Sets dynamically, depending on the corperate colour
 -(UIColor*)alertTextColour{
-
+    
     CGFloat red = 0.0, green = 0.0, blue = 0.0, alpha = 0.0;
     [[GlobalSCL getBackgroundColour] getRed:&red green:&green blue:&blue alpha:&alpha];
     

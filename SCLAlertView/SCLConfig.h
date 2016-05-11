@@ -11,6 +11,7 @@
 
 @interface SCLConfig : NSObject  <NSObject>
 
++(_Nonnull instancetype)configurationWithBlock:(void (^)(id<SCLConfig>))configurationBlock;
 
 +(_Nonnull instancetype)configWithColour:(nullable UIColor*)colour background:(nonnull UIColor*)background andFont:(nullable UIFont*)font;
 
@@ -32,6 +33,12 @@
  * Sets the global font of all alerts. Defaults to Avenir 18
  */
 @property (nonatomic, strong, nullable) UIFont * globalFont;
+
+
+@end
+
+@protocol SCLConfig <NSObject>
+
 
 
 @end

@@ -1,4 +1,4 @@
-SCLAlertView-Objective-C
+SCLAlertView-Objective-C ( With helper class :) )
 ============
 
 Animated Alert View written in Swift but ported to Objective-C, which can be used as a `UIAlertView` or `UIAlertController` replacement.
@@ -14,6 +14,66 @@ Animated Alert View written in Swift but ported to Objective-C, which can be use
 ![BackgroundImage](https://raw.githubusercontent.com/dogo/SCLAlertView/master/ScreenShots/ScreenShot5.png)_
 ![BackgroundImage](https://raw.githubusercontent.com/dogo/SCLAlertView/master/ScreenShots/ScreenShot6.png)
 ![BackgroundImage](https://raw.githubusercontent.com/dogo/SCLAlertView/master/ScreenShots/ScreenShot7.png)
+
+###Installation
+To install add the following line to your Podfile:
+```
+pod 'SCLAlertView-Objective-C', :git => 'https://github.com/mylogon341/SCLAlertView.git'
+```
+
+###Global config setup
+Ideally you want to run this when launching the app
+```Objective-C
+[GlobalSCL alertConfig:[SCLConfig configurationWithBlock:^(id<SCLMutableConfig>config){
+        [config setCorperateColour:[UIColor greenColor]];
+        [config setBackground:[UIColor blueColor]];
+        [config setGlobalFont:[UIFont fontWithName:@"Avenir-light" size:33]];
+        [config setTitlesUpperCase:YES];
+    }]];
+
+```
+
+###Usage
+Install the pod, using the above instructions, and then in each file you need an alert
+```Objective-C
+#import <GlobalSCL.h>
+```
+or create a .pch file and import it into there to make it accessible from everywhere
+
+###Add TextView
+Getting singleton Alert
+```Objective-C
+SCLAlertView * alert = [GlobalSCL sclGlobal];
+```
+
+###Add TextView
+A standard textview can easily be inserted and have text retrieved from
+```Objective-C
+SCLAlertView * alert = [GlobalSCL sclGlobal];
+[alert addTextView];
+    
+[alert addButton:@"Button title"
+     actionBlock:^{
+         NSLog(@"%@",alert.customTextView.text);
+}];
+```
+
+###Making calls to helper class
+```Objective-C
+[GlobalSCL showMessage:@"Alert!" withBody:@"Body here. Body there" forSeconds:14];
+[GlobalSCL showMessage:@"Success!!!" forSeconds:2.5];
+[GlobalSCL sclWaitingShow:@"Processing" body:@"This is a body"];
+```
+
+###Update 'waiting' view's body text
+This is pretty handy when loading a collection of objects
+```Objective-C
+-(void)updateProgress:(int)received outOf:(int)total{
+    [GlobalSCL updateAlertText:[NSString stringWithFormat:@"%d/%d loaded",received,total]];
+}
+```
+
+------------------------------------------------------------------------------------------
 
 ###Fluent style
 
@@ -327,10 +387,6 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
 ### Installation
 
 SCLAlertView-Objective-C is available through [CocoaPods](http://cocoapods.org).
-
-To install add the following line to your Podfile:
-
-    pod 'SCLAlertView-Objective-C'
 
 ### Collaboration
 I tried to build an easy to use API, while beeing flexible enough for multiple variations, but I'm sure there are ways of improving and adding more features, so feel free to collaborate with ideas, issues and/or pull requests.

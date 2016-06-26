@@ -8,7 +8,10 @@
 
 #import "GlobalSCL.h"
 
+static GlobalSCL * global;
+
 @interface GlobalSCL()
+
 
 @property (nonatomic, strong) SCLAlertView *aAlert;
 @property (nonatomic, strong) SCLConfig *configFile;;
@@ -21,18 +24,19 @@
     [self globalSelf].configFile = config;
 }
 
-+(SCLAlertView *)sclGlobal{
++(SCLAlertView *)sclGlobalWithNewWindow:(BOOL)newWindow{
     
-    [self sclWaitingHide];
+    if ([[self globalSelf].aAlert isVisible]) {
+        [[self globalSelf].aAlert hideView];
+        return [self sclGlobalWithNewWindow:newWindow];
+    }
     
-    SCLAlertView * alert = [[self globalSelf] alert];
+    SCLAlertView * alert = [[self globalSelf] alertWithNewWindow:newWindow];
     [alert removeTopCircle];
     return alert;
 }
 
 +(GlobalSCL*)globalSelf{
-    static GlobalSCL * global;
-    
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         global = [[GlobalSCL alloc]init];
@@ -41,12 +45,12 @@
     return global;
 }
 
--(SCLAlertView*)alert{
+-(SCLAlertView*)alertWithNewWindow:(BOOL)newWindow{
     if (!_aAlert) {
         
         __weak typeof(self) weakSelf = self;
-
-        _aAlert = [[SCLAlertView alloc]initWithNewWindow];
+        
+        _aAlert = newWindow ? [[SCLAlertView alloc]initWithNewWindow] : [[SCLAlertView alloc]init];
         [_aAlert setCustomViewColor: self.configFile.corperateColour ? self.configFile.corperateColour : [UIColor lightGrayColor]];
         _aAlert.attributedFormatBlock = ^NSAttributedString* (NSString *value)
         {
@@ -57,41 +61,42 @@
         [_aAlert setShowAnimationType:FadeIn];
         [_aAlert setHideAnimationType:FadeOut];
         
+        [_aAlert alertIsDismissed:^{
+            _aAlert = nil;
+        }];
+        
     }
     return _aAlert;
 }
 
-+(void)sclWaitingShow:(NSString *)title body:(NSString*)body{
++ (UIViewController*) topMostController
+{
+    UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
     
-    SCLAlertView * alert = [[self globalSelf] alert];
+    while (topController.presentedViewController) {
+        topController = topController.presentedViewController;
+    }
     
-    [alert showWaiting:title
-              subTitle:body
-      closeButtonTitle:nil
-              duration:0.0];
+    return topController;
+}
+
++(void)sclWaitingShow:(NSString*)title
+                 body:(NSString*)body{
+    
+    SCLAlertView * alert = [[self globalSelf] alertWithNewWindow:YES];
+    [alert removeTopCircle];
+    
+    [alert showInfo:body ? title : nil
+           subTitle:body ? body : title
+   closeButtonTitle:nil
+           duration:0.0];
 }
 
 +(void)sclWaitingHide{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[self globalSelf].aAlert hideView];
-        [self globalSelf].aAlert = nil;
-    });
+    [[[self globalSelf] alertWithNewWindow:NO] hideView];
+    NSLog(@"hiding");
 }
 
-+(UIFont*)getGlobalFont{
-    UIFont * font = [self globalSelf].configFile.globalFont;
-    return font ? font : [UIFont fontWithName:@"Avenir" size:18];
-}
-
-+(UIColor*)getGlobalColour{
-    UIColor * colour = [self globalSelf].configFile.corperateColour;
-    return colour ? colour : [UIColor lightGrayColor];
-}
-
-+(UIColor*)getBackgroundColour{
-    UIColor * colour = [self globalSelf].configFile.background;
-    return colour ? colour : [UIColor lightGrayColor];
-}
 
 -(NSAttributedString*)sclAttString:(NSString *)value{
     NSMutableDictionary *attrsDictionary = [NSMutableDictionary dictionary];
@@ -114,23 +119,28 @@
     });
 }
 
-
-+(void)showMessage:(NSString *)message forSeconds:(NSUInteger)seconds{
++(void)showMessage:(NSString *)title withBody:(NSString *)body forSeconds:(NSUInteger)seconds{
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        SCLAlertView * messageAlert = [self sclGlobal];
         
-        [messageAlert showEdit:nil
-                      subTitle:message
-              closeButtonTitle:nil
-                      duration:seconds];
+        [[self sclGlobalWithNewWindow:NO] showEdit:[self topMostController]
+                             title:body ? title : nil
+                          subTitle:body ? body : title
+                  closeButtonTitle:nil
+                          duration:seconds];
     });
+}
+
++(void)showMessage:(NSString *)message forSeconds:(NSUInteger)seconds{
+    [self showMessage:nil
+             withBody:message
+           forSeconds:seconds];
 }
 
 
 //Sets dynamically, depending on the corperate colour
 -(UIColor*)alertTextColour{
-
+    
     CGFloat red = 0.0, green = 0.0, blue = 0.0, alpha = 0.0;
     [[GlobalSCL getBackgroundColour] getRed:&red green:&green blue:&blue alpha:&alpha];
     
@@ -140,5 +150,25 @@
     return isDark ? [UIColor lightTextColor] : [UIColor darkTextColor];
 }
 
+#pragma mark - Getter methods
 
+
++(BOOL)areAllTitlesUppercase{
+    return [self globalSelf].configFile.titlesUpperCase;
+}
+
++(UIFont*)getGlobalFont{
+    UIFont * font = [self globalSelf].configFile.globalFont;
+    return font ? font : [UIFont fontWithName:@"Avenir" size:18];
+}
+
++(UIColor*)getGlobalColour{
+    UIColor * colour = [self globalSelf].configFile.corperateColour;
+    return colour ? colour : [UIColor lightGrayColor];
+}
+
++(UIColor*)getBackgroundColour{
+    UIColor * colour = [self globalSelf].configFile.background;
+    return colour ? colour : [UIColor lightGrayColor];
+}
 @end

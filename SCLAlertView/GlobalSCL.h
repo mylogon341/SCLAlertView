@@ -10,7 +10,9 @@
 @interface GlobalSCL : NSObject
 
 
-+(SCLAlertView*)sclGlobal;
++(SCLAlertView *)sclGlobalWithNewWindow:(BOOL)newWindow;
+
++ (UIViewController*) topMostController;
 
 /**OPTIONAL:
  *A good idea to pass this in app delegate (didFinishLaunchingWithOptions) or somewhere similar to make sure default vaules are always set
@@ -26,6 +28,9 @@
 /**Shows a message for set number of seconds. Useful for success messages etc*/
 +(void)showMessage:(NSString *)message forSeconds:(NSUInteger)seconds;
 
+/**Shows a message for set number of seconds with title.*/
++(void)showMessage:(NSString *)title withBody:(NSString*)body forSeconds:(NSUInteger)seconds;
+
 /**Update alert string here. Useful for progress text etc*/
 +(void)updateAlertText:(NSString*)body;
 
@@ -35,6 +40,10 @@
 
 /**Getter for colour set in config file. If not set in an SCLConfig for alertConfig:, then will fall back on lightGray*/
 +(UIColor*)getGlobalColour;
+
++(UIColor*)getBackgroundColour;
+
++(BOOL)areAllTitlesUppercase;
 
 @end
 

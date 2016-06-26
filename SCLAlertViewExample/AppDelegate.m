@@ -20,14 +20,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
 
-    
-    [GlobalSCL alertConfig:
-     [SCLConfig configWithColour:[UIColor blueColor]
-                      background:[UIColor blueColor]
-                         andFont:[UIFont fontWithName:@"Avenir-light" size:20]
-      ]];
-    
-//    [GlobalSCL showMessage:@"test" forSeconds:3];
+    [GlobalSCL alertConfig:[SCLConfig configurationWithBlock:^(id<SCLMutableConfig>config){
+        [config setBackground:[UIColor colorWithWhite:1 alpha:0.95]];
+        [config setGlobalFont:[UIFont systemFontOfSize:18]];
+        [config setTitlesUpperCase:YES];
+    }]];
     return YES;
 }
 

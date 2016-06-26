@@ -12,6 +12,7 @@
 #import "UIImage+ImageEffects.h"
 #import "SCLTimerDisplay.h"
 #import "SCLMacros.h"
+#import "GlobalSCL.h"
 
 #if defined(__has_feature) && __has_feature(modules)
 @import AVFoundation;
@@ -272,6 +273,17 @@ SCLTimerDisplay *buttonTimer;
     return (_rootViewController != nil && _rootViewController.presentingViewController);
 }
 
++ (UIViewController*) topMostController
+{
+    UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    
+    while (topController.presentedViewController) {
+        topController = topController.presentedViewController;
+    }
+    
+    return topController;
+}
+
 #pragma mark - View Cycle
 
 - (void)viewWillLayoutSubviews
@@ -391,6 +403,10 @@ SCLTimerDisplay *buttonTimer;
         } else {
             y += btn.frame.size.height + 10.0f;
         }
+    }
+    
+    if (_buttons.count == 0) {
+        self.windowHeight += 9;
     }
     
     // Adapt window height according to icon size
@@ -930,7 +946,8 @@ SCLTimerDisplay *buttonTimer;
         else
         {
             self.labelTitle.font = [UIFont fontWithName:_bodyTextFontFamily size:100];
-            self.labelTitle.attributedText = self.attributedFormatBlock(title);
+            
+            self.labelTitle.attributedText = self.attributedFormatBlock([GlobalSCL areAllTitlesUppercase] ? title.uppercaseString : title);
 //            [self.labelTitle setAdjustsFontSizeToFitWidth:YES];
         }
 
@@ -1068,6 +1085,10 @@ SCLTimerDisplay *buttonTimer;
     
     // Chainable objects
     return [[SCLAlertViewResponder alloc] init:self];
+}
+
+-(BOOL)shouldAutorotate{
+    return NO;
 }
 
 #pragma mark - Show using UIViewController

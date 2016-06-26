@@ -9,29 +9,36 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+@protocol SCLMutableConfig <NSObject>
+
+
+/**Sets the global colour of all alerts. Defaults to light gray (buttons and spinner if loading)*/
+@property (nullable, nonatomic) UIColor * corperateColour;
+
+/** Sets the global colour of all alerts. Defaults to light white*/
+@property (nullable, nonatomic) UIColor * background;
+
+
+/**Sets the global font of all alerts. Defaults to Avenir 18*/
+@property (nullable, nonatomic) UIFont * globalFont;
+
+/**Forces all titles to be uppercase globally*/
+@property (nonatomic) BOOL titlesUpperCase;
+
+@end
+
+
 @interface SCLConfig : NSObject  <NSObject>
 
 
-+(_Nonnull instancetype)configWithColour:(nullable UIColor*)colour background:(nonnull UIColor*)background andFont:(nullable UIFont*)font;
++(_Nonnull instancetype)configurationWithBlock:(void (^ _Nonnull)(_Nonnull id<SCLMutableConfig>))configurationBlock;
 
-/**HEX to be inputted like #3D8FBA, with or without # */
-+(_Nonnull instancetype)configWithHEX:(nonnull NSString*)colour backgroundHEX:(nonnull NSString*)background andFont:(nonnull UIFont *)font;
+@property (nullable, nonatomic, copy) UIColor * corperateColour;
 
+@property (nullable, nonatomic, copy) UIColor * background;
 
-/**
- * Sets the global colour of all alerts. Defaults to light gray (buttons and spinner if loading)
- */
-@property (nonatomic, strong, nullable) UIColor * corperateColour;
+@property (nullable, nonatomic, copy) UIFont * globalFont;
 
-/**
- * Sets the global colour of all alerts. Defaults to light white
- */
-@property (nonatomic, strong, nullable) UIColor * background;
-
-/**
- * Sets the global font of all alerts. Defaults to Avenir 18
- */
-@property (nonatomic, strong, nullable) UIFont * globalFont;
-
+@property (nonatomic, getter=areAllTitlesUppercase) BOOL titlesUpperCase;
 
 @end
